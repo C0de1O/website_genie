@@ -1,0 +1,289 @@
+<html><head><base href="https://genius-du-seigneur.com/admin.html">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Génie du Seigneur - Admin Bibliothèque</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body {
+        font-family: "Urbanist", sans-serif;
+        background-color: #17161d;
+        color: #fff;
+    }
+    .navbar {
+        background-color: #2a252e;
+    }
+    .logo {
+        color: #fff;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 2px;
+    }
+    .logo span {
+        font-weight: 300;
+    }
+    .document-form {
+        background-color: #2a252e;
+        padding: 2rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+    }
+    .document-list, .preview-section {
+        background-color: #2a252e;
+        padding: 2rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+    }
+    .btn-primary {
+        background-color: #f9f06d;
+        border-color: #f9f06d;
+        color: #17161d;
+    }
+    .btn-primary:hover {
+        background-color: #e6de5c;
+        border-color: #e6de5c;
+        color: #17161d;
+    }
+    .btn-outline-light {
+        border-color: #f9f06d;
+        color: #f9f06d;
+    }
+    .btn-outline-light:hover {
+        background-color: #f9f06d;
+        color: #17161d;
+    }
+    #preview-image {
+        max-width: 100%;
+        height: auto;
+        margin-top: 1rem;
+    }
+    .document-card {
+        background-color: #3a3540;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+    .document-card:hover {
+        transform: scale(1.05);
+    }
+    .document-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    .document-card .card-body {
+        padding: 1rem;
+    }
+    .document-card .status {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+    .document-card .status.available {
+        background-color: #28a745;
+    }
+    .document-card .status.coming-soon {
+        background-color: #ffc107;
+        color: #000;
+    }
+</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><h3 class="logo">Génie<span>du Seigneur</span></h3></a>
+            <button class="btn btn-outline-light" id="return-to-library">Retour à la Bibliothèque</button>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-5">Admin Bibliothèque</h1>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="document-form">
+                    <h2>Ajouter/Modifier un document</h2>
+                    <form id="document-form">
+                        <input type="hidden" id="document-id">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Titre</label>
+                            <input type="text" class="form-control" id="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image</label>
+                            <input type="file" class="form-control" id="image" accept="image/*" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Statut</label>
+                            <select class="form-control" id="status" required>
+                                <option value="Disponible">Disponible</option>
+                                <option value="Bientôt disponible">Bientôt disponible</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Prix</label>
+                            <input type="text" class="form-control" id="price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Type</label>
+                            <select class="form-control" id="type" required>
+                                <option value="free">Gratuit</option>
+                                <option value="paid">Payant</option>
+                                <option value="coming">Bientôt disponible</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="preview-section">
+                    <h2>Aperçu</h2>
+                    <div id="preview-card" class="document-card">
+                        <img id="preview-image" src="https://via.placeholder.com/300x200" alt="Aperçu de l'image">
+                        <div class="card-body">
+                            <h5 id="preview-title" class="card-title">Titre du document</h5>
+                            <p id="preview-description" class="card-text">Description du document</p>
+                            <p id="preview-price" class="card-text">Prix: 0.00 €</p>
+                            <span id="preview-status" class="status">Statut</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="document-list">
+            <h2>Liste des documents</h2>
+            <ul id="document-list" class="list-group">
+                <!-- Documents will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Check if user is authenticated
+        if (!localStorage.getItem('adminAuthenticated')) {
+            window.location.href = 'bibliotheque.html';
+        }
+
+        let documents = JSON.parse(localStorage.getItem('documents')) || [];
+
+        function renderDocumentList() {
+            const list = document.getElementById('document-list');
+            list.innerHTML = '';
+            documents.forEach((doc, index) => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.innerHTML = `
+                    ${doc.title}
+                    <div>
+                        <button class="btn btn-sm btn-primary edit-document" data-index="${index}">Modifier</button>
+                        <button class="btn btn-sm btn-danger delete-document" data-index="${index}">Supprimer</button>
+                    </div>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function saveDocuments() {
+            localStorage.setItem('documents', JSON.stringify(documents));
+        }
+
+        function updatePreview() {
+            document.getElementById('preview-title').textContent = document.getElementById('title').value;
+            document.getElementById('preview-description').textContent = document.getElementById('description').value;
+            document.getElementById('preview-price').textContent = `Prix: ${document.getElementById('price').value} €`;
+            document.getElementById('preview-status').textContent = document.getElementById('status').value;
+            document.getElementById('preview-status').className = `status ${document.getElementById('status').value === 'Disponible' ? 'available' : 'coming-soon'}`;
+        }
+
+        document.getElementById('document-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = document.getElementById('document-id').value;
+            const imageFile = document.getElementById('image').files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+                const doc = {
+                    title: document.getElementById('title').value,
+                    image: event.target.result,
+                    status: document.getElementById('status').value,
+                    price: document.getElementById('price').value,
+                    type: document.getElementById('type').value,
+                    description: document.getElementById('description').value
+                };
+                
+                if (id) {
+                    documents[id] = doc;
+                } else {
+                    documents.push(doc);
+                }
+                saveDocuments();
+                renderDocumentList();
+                this.reset();
+                document.getElementById('document-id').value = '';
+                document.getElementById('preview-image').src = 'https://via.placeholder.com/300x200';
+            };
+            
+            if (imageFile) {
+                reader.readAsDataURL(imageFile);
+            } else {
+                console.error('No image file selected');
+            }
+        });
+
+        document.getElementById('document-list').addEventListener('click', function(e) {
+            if (e.target.classList.contains('edit-document')) {
+                const index = e.target.getAttribute('data-index');
+                const doc = documents[index];
+                document.getElementById('document-id').value = index;
+                document.getElementById('title').value = doc.title;
+                document.getElementById('status').value = doc.status;
+                document.getElementById('price').value = doc.price;
+                document.getElementById('type').value = doc.type;
+                document.getElementById('description').value = doc.description;
+                document.getElementById('preview-image').src = doc.image;
+                updatePreview();
+            } else if (e.target.classList.contains('delete-document')) {
+                const index = e.target.getAttribute('data-index');
+                if (confirm('Êtes-vous sûr de vouloir supprimer ce document ?')) {
+                    documents.splice(index, 1);
+                    saveDocuments();
+                    renderDocumentList();
+                }
+            }
+        });
+
+        document.getElementById('image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('preview-image').src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        ['title', 'status', 'price', 'description'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updatePreview);
+        });
+
+        document.getElementById('return-to-library').addEventListener('click', function() {
+            window.location.href = 'bibliotheque.html';
+        });
+
+        renderDocumentList();
+    </script>
+</body>
+</html>

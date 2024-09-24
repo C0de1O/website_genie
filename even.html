@@ -1,0 +1,614 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événements Chrétiens - Les Génies du Seigneur de Togoudo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #303f9f;
+            --accent-color: #7986cb;
+            --text-color: #333;
+            --light-bg: #f5f5f5;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('img/scc/11.jpg') center/cover no-repeat;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        header .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 3.5em;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 1.4em;
+            margin-top: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .event-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .event-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+
+        .event-image {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .event-details {
+            padding: 25px;
+        }
+
+        .event-title {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .event-date, .event-location {
+            font-size: 0.9em;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .event-description {
+            margin-top: 15px;
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        .comment-section {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .comment {
+            background-color: white;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+
+        .comment-form button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .comment-form button:hover {
+            background-color: var(--primary-color);
+        }
+
+        .event-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .event-rating .stars {
+            color: #ffd700;
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        .event-rating .rating-value {
+            font-weight: bold;
+        }
+
+        .appointment-btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .appointment-btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        #appointment-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 15% auto;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .modal-content h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .submit-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .floating-menu {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .floating-menu button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .floating-menu button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #25D366;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-chat-container {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background-color: #075E54;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            margin: 0;
+        }
+
+        #close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .chat-body {
+            height: calc(100% - 50px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        #chat-form {
+            display: flex;
+            padding: 10px;
+        }
+
+        #chat-input {
+            flex-grow: 1;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #chat-form button {
+            background-color: #075E54;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin-left: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-menu">
+       <a href="index.html">
+         <button id="home-button" title="Accueil"><i class="fas fa-home"></i></button>
+         </a>
+    </div>
+    <header>
+        <div class="container">
+            <h1>Événements Chrétiens</h1>
+            <p class="subtitle">Restez connectés avec notre communauté</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="event-list">
+        </section>
+    </main>
+
+    <div id="appointment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Prendre Rendez-vous</h2>
+            <form id="appointment-form">
+                <div class="form-group">
+                    <label for="name">Nom complet</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Adresse e-mail</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Numéro de téléphone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="event">Événement</label>
+                    <input type="text" id="event" name="event" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message (facultatif)</label>
+                    <textarea id="message" name="message" rows="4"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Confirmer le rendez-vous</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="whatsapp-chat" class="whatsapp-chat-container">
+        <div class="chat-header">
+            <h3>Chat avec nous</h3>
+            <button id="close-chat">&times;</button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-messages"></div>
+            <form id="chat-form">
+                <input type="text" id="chat-input" placeholder="Écrivez votre message..." required>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </div>
+    <button id="whatsapp-button" class="whatsapp-button">
+        <i class="fab fa-whatsapp"></i>
+    </button>
+
+    <script>
+        const events = [
+            {
+                id: 1,
+                title: "Conférence sur la Foi Moderne",
+                date: "2023-07-30",
+                location: "Église Centrale, Togoudo",
+                description: "Une conférence inspirante sur le renforcement de la foi dans le monde moderne, avec des intervenants de renom.",
+                image: "img/scc/12.webp"
+            },
+            {
+                id: 2,
+                title: "Retraite Spirituelle d'Été",
+                date: "2023-08-15",
+                location: "Centre de Retraite Saint-Joseph",
+                description: "Un weekend de prière, de méditation et de renouveau spirituel dans un cadre paisible et ressourçant.",
+                image: "img/scc/10.jpg"
+            },
+            {
+                id: 3,
+                title: "Festival de Musique Chrétienne",
+                date: "2023-08-05",
+                location: "Parc Municipal, Togoudo",
+                description: "Une journée remplie de louanges et d'adoration avec les meilleurs artistes chrétiens de la région.",
+                image: "img/scc/7.jpg"
+            },
+            {
+                id: 4,
+                title: "Séminaire sur le Leadership Chrétien",
+                date: "2023-08-22",
+                location: "Centre de Conférences Emmanuel",
+                description: "Un séminaire intensif pour développer vos compétences de leader dans un contexte chrétien.",
+                image: "img/scc/13.webp"
+            }
+        ];
+
+        function createEventCard(event) {
+            return `
+                <div class="event-card">
+                    <img src="${event.image}" alt="${event.title}" class="event-image">
+                    <div class="event-details">
+                        <h3 class="event-title">${event.title}</h3>
+                        <div class="event-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-value">4.0</span>
+                        </div>
+                        <p class="event-date"><i class="far fa-calendar"></i> ${event.date}</p>
+                        <p class="event-location"><i class="fas fa-map-marker-alt"></i> ${event.location}</p>
+                        <p class="event-description">${event.description}</p>
+                        <a href="#" class="appointment-btn" data-event-id="${event.id}">Prendre Rendez-vous</a>
+                       
+                    </div>
+                </div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const eventList = document.querySelector('.event-list');
+            events.forEach(event => {
+                eventList.innerHTML += createEventCard(event);
+            });
+
+            const modal = document.getElementById('appointment-modal');
+            const appointmentBtns = document.querySelectorAll('.appointment-btn');
+            const closeBtn = document.querySelector('.close');
+
+            appointmentBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const eventId = this.getAttribute('data-event-id');
+                    const event = events.find(e => e.id == eventId);
+                    document.getElementById('event').value = event.title;
+                    modal.style.display = 'block';
+                });
+            });
+
+            closeBtn.onclick = function() {
+                modal.style.display = 'none';
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            document.getElementById('appointment-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const event = document.getElementById('event').value;
+                const message = document.getElementById('message').value;
+
+                const whatsappMessage = `Nouvelle demande de rendez-vous:%0A
+Nom: ${name}%0A
+Email: ${email}%0A
+Téléphone: ${phone}%0A
+Événement: ${event}%0A
+Message: ${message}`;
+
+                window.open(`https://wa.me/22952107074?text=${whatsappMessage}`, '_blank');
+                modal.style.display = 'none';
+            });
+
+            const commentForms = document.querySelectorAll('.comment-form');
+            commentForms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const commentText = this.querySelector('textarea').value;
+                    const commentsList = this.parentElement.querySelector('.comments-list');
+                    const newComment = document.createElement('div');
+                    newComment.classList.add('comment');
+                    newComment.innerHTML = `
+                        <p>${commentText}</p>
+                        <small>Posté le ${new Date().toLocaleString()}</small>
+                    `;
+                    commentsList.insertBefore(newComment, commentsList.firstChild);
+                    this.reset();
+                });
+            });
+
+            const whatsappButton = document.getElementById('whatsapp-button');
+            const chatContainer = document.getElementById('whatsapp-chat');
+            const closeChat = document.getElementById('close-chat');
+            const chatForm = document.getElementById('chat-form');
+            const chatInput = document.getElementById('chat-input');
+            const chatMessages = document.querySelector('.chat-messages');
+
+            whatsappButton.addEventListener('click', function() {
+                chatContainer.style.display = 'block';
+            });
+
+            closeChat.addEventListener('click', function() {
+                chatContainer.style.display = 'none';
+            });
+
+            chatForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const message = chatInput.value.trim();
+                if (message) {
+                    appendMessage('Vous', message);
+                    sendWhatsAppMessage(message);
+                    chatInput.value = '';
+                }
+            });
+
+            function appendMessage(sender, message) {
+                const messageElement = document.createElement('div');
+                messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function sendWhatsAppMessage(message) {
+                const phoneNumber = '+22952107074';
+                const encodedMessage = encodeURIComponent(message);
+                window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+            }
+        });
+
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.history.back();
+        });
+
+        document.getElementById('home-button').addEventListener('click', function() {
+            window.location.href = '/';
+        });
+    </script>
+</body>
+</html>

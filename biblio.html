@@ -1,0 +1,441 @@
+<html><head><base href="">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Génie du Seigneur - Bibliothèque</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@200;300;400;500;600;700;800&display=swap");
+
+  body {
+    font-family: "Urbanist", sans-serif;
+    background-color: #17161d;
+    color: #fff;
+  }
+
+  .navbar {
+    background-color: #2a252e;
+  }
+
+  .logo {
+    color: #fff;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+
+  .logo span {
+    font-weight: 300;
+  }
+
+  .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+
+  .nav-link:hover {
+    color: #f9f06d !important;
+  }
+
+  .search-bar {
+    max-width: 500px;
+    margin: 2rem auto;
+  }
+
+  .document-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+  }
+
+  .document-card {
+    background-color: #2a252e;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .document-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+
+  .document-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .document-info {
+    padding: 1rem;
+  }
+
+  .document-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .document-status {
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    display: inline-block;
+  }
+
+  .status-available {
+    background-color: #28a745;
+  }
+
+  .status-coming-soon {
+    background-color: #ffc107;
+    color: #000;
+  }
+
+  .document-price {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+
+  .price-free {
+    color: #28a745;
+  }
+
+  .price-paid {
+    color: #007bff;
+  }
+
+  .btn-download, .btn-buy {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .document-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(31, 27, 36, 0.95);
+    padding: 1rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    border-top: 1px solid #3a3541;
+    opacity: 0;
+  }
+
+  .document-card.show-details .document-details {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .document-card.show-details .btn-more-info {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .btn-more-info, .btn-less-info {
+    background: none;
+    border: none;
+    color: #f9f06d;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .btn-more-info:hover, .btn-less-info:hover {
+    color: #fff;
+    text-shadow: 0 0 5px rgba(249, 240, 109, 0.5);
+  }
+
+  .btn-less-info {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+  }
+
+  #newsletter-signup {
+    background: linear-gradient(135deg, #2a252e 0%, #3a3541 100%);
+    padding: 3rem;
+    border-radius: 15px;
+    margin-top: 4rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: all 0.5s ease-in-out;
+  }
+
+  #newsletter-signup::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 80%);
+    transform: rotate(30deg);
+    pointer-events: none;
+    animation: rotateGradient 20s linear infinite;
+  }
+
+  @keyframes rotateGradient {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  #newsletter-signup h2 {
+    color: #f9f06d;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(249, 240, 109, 0.3);
+    animation: textPulse 2s infinite alternate;
+  }
+
+  @keyframes textPulse {
+    0% {
+      text-shadow: 0 2px 10px rgba(249, 240, 109, 0.3);
+    }
+    100% {
+      text-shadow: 0 2px 20px rgba(249, 240, 109, 0.6);
+    }
+  }
+
+  #newsletter-signup p {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #subscribe-form .input-group {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+
+  #subscribe-form .input-group:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  }
+
+  #subscribe-form input {
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    background-color: rgba(255,255,255,0.1);
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+
+  #subscribe-form input:focus {
+    background-color: rgba(255,255,255,0.2);
+  }
+
+  #subscribe-form button {
+    border: none;
+    padding: 0 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(45deg, #f9f06d, #ff9a9e);
+    color: #17161d;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #subscribe-form button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: all 0.5s ease;
+  }
+
+  #subscribe-form button:hover::before {
+    left: 100%;
+  }
+
+  #subscribe-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(249, 240, 109, 0.3);
+  }
+
+  @keyframes glow {
+    0% {
+      box-shadow: 0 0 5px rgba(249, 240, 109, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(249, 240, 109, 0.8);
+    }
+    100% {
+      box-shadow: 0 0 5px rgba(249, 240, 109, 0.5);
+    }
+  }
+
+  #newsletter-signup {
+    animation: glow 3s infinite alternate;
+  }
+</style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#"><h3 class="logo">Génie<span>du Seigneur</span></h3></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Maison</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="even.html">Evènement en cours</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="jeu.html">Divertissement</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="ebook.html">Bibliothèque</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <h1 class="text-center mb-5">Bibliothèque Chrétienne</h1>
+    
+    <div class="search-bar">
+      <input type="text" id="search-input" class="form-control" placeholder="Rechercher un document...">
+    </div>
+
+    <div class="document-grid" id="document-container">
+      <!-- Les documents seront générés dynamiquement ici -->
+    </div>
+
+    <div id="newsletter-signup" class="text-center">
+      <h2>Nourrissez Votre Foi</h2>
+      <p>"Car la parole de Dieu est vivante et efficace, plus tranchante qu'une épée quelconque à deux tranchants, pénétrante jusqu'à partager âme et esprit, jointures et moelles; elle juge les sentiments et les pensées du cœur." - Hébreux 4:12</p>
+      <form id="subscribe-form" class="mt-4">
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" placeholder="Votre adresse e-mail" aria-label="Votre adresse e-mail" required>
+          <button class="btn" type="submit">Abonnez-vous</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const documents = [
+      {
+        title: "La Bible illustrée",
+        image: "https://via.placeholder.com/250x200?text=La+Bible+illustrée",
+        status: "Disponible",
+        price: "Gratuit",
+        type: "free",
+        description: "Une version magnifiquement illustrée de la Bible, parfaite pour toute la famille. Plongez dans les récits bibliques comme jamais auparavant, avec des illustrations saisissantes qui donnent vie aux histoires sacrées."
+      },
+      {
+        title: "Guide de prière quotidienne",
+        image: "https://via.placeholder.com/250x200?text=Guide+de+prière",
+        status: "Disponible",
+        price: "9.99 €",
+        type: "paid",
+        description: "Un guide complet pour enrichir votre vie de prière au quotidien. Découvrez des techniques de méditation, des prières inspirantes et des conseils pratiques pour approfondir votre relation avec Dieu."
+      },
+      {
+        title: "Histoire de l'Église",
+        image: "https://via.placeholder.com/250x200?text=Histoire+de+l%27Église",
+        status: "Bientôt disponible",
+        price: "Prix à venir",
+        type: "coming",
+        description: "Un voyage fascinant à travers l'histoire du christianisme, des origines à nos jours. Explorez les moments clés, les figures emblématiques et les événements qui ont façonné la foi chrétienne au fil des siècles."
+      },
+      {
+        title: "Méditations bibliques",
+        image: "https://via.placeholder.com/250x200?text=Méditations+bibliques",
+        status: "Disponible",
+        price: "Gratuit",
+        type: "free",
+        description: "Une collection de méditations profondes pour nourrir votre âme chaque jour. Trouvez l'inspiration, la paix et la sagesse dans ces réflexions basées sur les Écritures, parfaites pour commencer ou terminer votre journée."
+      }
+    ];
+
+    function createDocumentCard(doc) {
+      return `
+        <div class="document-card">
+          <div class="document-image" style="background-image: url('${doc.image}');"></div>
+          <div class="document-info">
+            <h3 class="document-title">${doc.title}</h3>
+            <span class="document-status ${doc.type === 'coming' ? 'status-coming-soon' : 'status-available'}">${doc.status}</span>
+            <p class="document-price ${doc.type === 'free' ? 'price-free' : 'price-paid'}">${doc.price}</p>
+            ${doc.type !== 'coming' ? `<button class="btn ${doc.type === 'free' ? 'btn-success btn-download' : 'btn-primary btn-buy'}">${doc.type === 'free' ? 'Télécharger' : 'Acheter'}</button>` : ''}
+            <button class="btn-more-info">En savoir plus <i class="fas fa-chevron-down"></i></button>
+          </div>
+          <div class="document-details">
+            <p>${doc.description}</p>
+            <button class="btn-less-info">Réduire <i class="fas fa-chevron-up"></i></button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDocuments(docs) {
+      const container = document.getElementById('document-container');
+      container.innerHTML = docs.map(createDocumentCard).join('');
+
+      // Ajouter les écouteurs d'événements pour les boutons "En savoir plus" et "Réduire"
+      document.querySelectorAll('.btn-more-info, .btn-less-info').forEach(button => {
+        button.addEventListener('click', function() {
+          const card = this.closest('.document-card');
+          card.classList.toggle('show-details');
+        });
+      });
+    }
+
+    // Rendu initial des documents
+    renderDocuments(documents);
+
+    // Fonction de recherche
+    document.getElementById('search-input').addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const filteredDocs = documents.filter(doc => 
+        doc.title.toLowerCase().includes(searchTerm) || 
+        doc.description.toLowerCase().includes(searchTerm)
+      );
+      renderDocuments(filteredDocs);
+    });
+
+    // Gestion du formulaire d'abonnement
+    document.getElementById('subscribe-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Merci de votre abonnement ! Vous recevrez bientôt nos dernières nouvelles.');
+      this.reset();
+    });
+
+    // Animation pour les documents "Bientôt disponible"
+    setInterval(() => {
+      document.querySelectorAll('.status-coming-soon').forEach(status => {
+        const dots = status.textContent.split('').filter(char => char === '.').length;
+        status.textContent = 'Bientôt disponible' + '.'.repeat((dots + 1) % 4);
+      });
+    }, 500);
+  </script>
+</body>
+</html>

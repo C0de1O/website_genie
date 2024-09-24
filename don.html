@@ -1,0 +1,505 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Génies du Seigneur de Togoudo - Faire un Don</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a1c71;
+            --secondary-color: #d76d77;
+            --accent-color: #ffaf7b;
+            --text-color: #333;
+            --light-bg: #f9f7f7;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('img/scc/10.jpg') center/cover no-repeat;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        header .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 3.5em;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 1.4em;
+            margin-top: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .team-description {
+            background-color: white;
+            padding: 60px;
+            margin: 60px 0;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-description h2 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .team-description p, .team-description ul {
+            font-size: 1.1em;
+            color: #555;
+            position: relative;
+            z-index: 1;
+        }
+
+        .team-description ul {
+            padding-left: 20px;
+        }
+
+        .donation-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .donation-option {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .donation-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .donation-option i {
+            font-size: 3em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .donation-option h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .donation-form {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .donation-form h3 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        #redirect-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .redirect-content {
+            background-color: white;
+            padding: 50px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .redirect-content h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .redirect-content .btn {
+            margin-top: 30px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 40px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 12px;
+            text-align: center;
+            animation: slideIn 0.5s;
+        }
+
+        .modal-content i {
+            font-size: 4em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .modal-content h2 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            margin-bottom: 15px;
+        }
+
+        .floating-menu {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .floating-menu button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .floating-menu button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes slideIn {
+            from {transform: translateY(-50px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .team-description {
+                padding: 40px;
+            }
+
+            .donation-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-menu">
+        <!--   <button id="back-button" title="Retour"><i class="fas fa-arrow-left"></i></button> -->
+        <a href="index.html">   <button id="home-button" href="index.html"  title="Accueil"><i class="fas fa-home" ></i></button> </a>
+       </div>
+
+    <header>
+        <div class="container">
+            <h1>Soutenez Notre Mission</h1>
+            <p class="subtitle">Votre générosité alimente notre lumière spirituelle</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="team-description">
+            <h2>Pourquoi Nous Soutenir ?</h2>
+            <p>Votre don aux Génies du Seigneur de Togoudo est un investissement dans la propagation de la Parole de Dieu et le renforcement de notre communauté spirituelle. Chaque contribution, quelle que soit sa forme, nous aide à :</p>
+            <ul>
+                <li>Organiser des concours bibliques et des compétitions de génie biblique</li>
+                <li>Mettre en place des conférences et des ateliers inspirants</li>
+                <li>Produire des ressources éducatives chrétiennes, y compris des livres et des films</li>
+                <li>Soutenir nos programmes d'enseignement et d'enquêtes spirituelles</li>
+                <li>Étendre notre portée et toucher plus de vies avec le message de l'Évangile</li>
+            </ul>
+        </section>
+
+        <section class="donation-options">
+            <div class="donation-option">
+                <i class="fas fa-hand-holding-heart"></i>
+                <h3>Don Financier</h3>
+                <p>Soutenez nos projets avec une contribution monétaire</p>
+            </div>
+            <div class="donation-option">
+                <i class="fas fa-box-open"></i>
+                <h3>Don Matériel</h3>
+                <p>Offrez des ressources ou du matériel pour nos activités</p>
+            </div>
+            <div class="donation-option">
+                <i class="fas fa-user-friends"></i>
+                <h3>Don de Compétences</h3>
+                <p>Partagez votre expertise pour faire avancer notre mission</p>
+            </div>
+        </section>
+
+        <section class="donation-form">
+            <h3>Faire un Don</h3>
+            <form id="donation-form">
+                <div class="form-group">
+                    <label for="name">Nom complet</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Adresse e-mail</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Numéro de téléphone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="donation-type">Type de don</label>
+                    <select id="donation-type" name="donation-type" required>
+                        <option value="">Choisissez le type de don</option>
+                        <option value="financial">Don Financier</option>
+                        <option value="material">Don Matériel</option>
+                        <option value="skills">Don de Compétences</option>
+                    </select>
+                </div>
+                <div class="form-group" id="financial-details" style="display:none;">
+                    <label for="amount">Montant du don (en FCFA)</label>
+                    <input type="number" id="amount" name="amount" min="100">
+                </div>
+                <div class="form-group" id="material-details" style="display:none;">
+                    <label for="material-description">Description du don matériel</label>
+                    <textarea id="material-description" name="material-description" rows="3"></textarea>
+                </div>
+                <div class="form-group" id="skills-details" style="display:none;">
+                    <label for="skills-description">Description de vos compétences</label>
+                    <textarea id="skills-description" name="skills-description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message (facultatif)</label>
+                    <textarea id="message" name="message" rows="4"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Soumettre</button>
+            </form>
+        </section>
+
+        <div style="text-align: center; margin: 60px 0;">
+            <a href="#" class="btn" id="contact-btn">Nous Contacter pour Plus d'Informations</a>
+        </div>
+    </main>
+
+    <div id="redirect-overlay">
+        <div class="redirect-content">
+            <h2>Connectons-nous sur WhatsApp</h2>
+            <p>Vous êtes sur le point d'être redirigé vers notre communauté WhatsApp pour discuter de votre don ou obtenir plus d'informations.</p>
+            <a href="https://wa.me/22952107074" class="btn" target="_blank">Poursuivre vers WhatsApp</a>
+        </div>
+    </div>
+
+    <div id="submission-modal" class="modal">
+        <div class="modal-content">
+            <i class="fas fa-heart-circle-check"></i>
+            <h2>Merci pour votre générosité!</h2>
+            <p>Les détails de votre don ont été envoyés à notre équipe via WhatsApp. Nous vous contacterons bientôt pour les prochaines étapes.</p>
+            <p>Que Dieu vous bénisse abondamment!</p>
+            <button id="close-modal" class="btn">Fermer</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contact-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('redirect-overlay').style.display = 'flex';
+        });
+
+        document.querySelector('#redirect-overlay .btn').addEventListener('click', function() {
+            document.getElementById('redirect-overlay').style.display = 'none';
+        });
+
+        document.getElementById('donation-type').addEventListener('change', function() {
+            document.getElementById('financial-details').style.display = 'none';
+            document.getElementById('material-details').style.display = 'none';
+            document.getElementById('skills-details').style.display = 'none';
+
+            switch(this.value) {
+                case 'financial':
+                    document.getElementById('financial-details').style.display = 'block';
+                    break;
+                case 'material':
+                    document.getElementById('material-details').style.display = 'block';
+                    break;
+                case 'skills':
+                    document.getElementById('skills-details').style.display = 'block';
+                    break;
+            }
+        });
+
+        document.getElementById('donation-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            sendToWhatsApp();
+        });
+
+        function sendToWhatsApp() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const donationType = document.getElementById('donation-type').value;
+            let details = '';
+            
+            switch(donationType) {
+                case 'financial':
+                    details = `Montant: ${document.getElementById('amount').value} FCFA`;
+                    break;
+                case 'material':
+                    details = `Description: ${document.getElementById('material-description').value}`;
+                    break;
+                case 'skills':
+                    details = `Compétences: ${document.getElementById('skills-description').value}`;
+                    break;
+            }
+            
+            const message = document.getElementById('message').value;
+
+            const whatsappMessage = `Nouveau don de ${name}%0A
+Email: ${email}%0A
+Téléphone: ${phone}%0A
+Type de don: ${donationType}%0A
+${details}%0A
+Message: ${message}`;
+
+            window.open(`https://wa.me/22952107074?text=${whatsappMessage}`, '_blank');
+            
+            document.getElementById('submission-modal').style.display = 'block';
+        }
+
+        document.getElementById('close-modal').addEventListener('click', function() {
+            document.getElementById('submission-modal').style.display = 'none';
+        });
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('submission-modal')) {
+                document.getElementById('submission-modal').style.display = 'none';
+            }
+        }
+
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.history.back();
+        });
+
+        document.getElementById('home-button').addEventListener('click', function() {
+            window.location.href = '/';
+        });
+    </script>
+</body>
+</html>

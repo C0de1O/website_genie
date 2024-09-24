@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Génie du Seigneur</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <!-- <link rel="stylesheet" href="css/bootstrap.css" /> -->
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-md">
+        <div class="container">
+          <h3 class="logo">Génie<span>du Seigneur</span></h3>
+          <!-- menu -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+          >
+            <input type="checkbox" id="toggle-menu" />
+            <label type="button" class="toggle-btn" for="toggle-menu">
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </label>
+          </button>
+          <div class="collapse navbar-collapse">
+            <!-- ms-auto -->
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#"
+                  >Maison</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="even.html">Evènement en cours</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="jeu.html">Divertissement </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="ebook.html">Ebook</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Plus
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="don.html">Faire un don</a></li>
+                  <li><a class="dropdown-item" href="equipe.html">Equipe</a></li>
+                  <li><a class="dropdown-item" href="contact.html">Nous contacter</a></li>
+                  <li>
+                    <hr class="dropdown-divider" />
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">Se connecter</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="logo">Génie<span>du Seigneur</span></h3>
+            </div>
+            <div class="modal-body">
+              <!-- menu -->
+              <!-- ms-auto -->
+              <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#"
+                    ><i class="fas fa-home"></i> Maison</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"
+                    ><i class="fas fa-users"></i> Evènement en cours</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="film.html"
+                    ><i class="fas fa-folder-open"></i> Nos Emissions</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="ebook.html"
+                    ><i class="fas fa-tags"></i> Ebook</a
+                  >
+                </li>
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="fas fa-reply-all"></i> Plus
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="don.html">Faire un don</a></li>
+                    <li><a class="dropdown-item" href="equipe.html">Equipe</a></li>
+                    <li>
+                      <a class="dropdown-item" href="contact.html">Nous contacter</a>
+                    </li>
+                    <li>
+                      <hr class="dropdown-divider" />
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#"
+                        >Notre capacité vient de Dieu</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                <label for="toggle-menu">Fermer</label>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h1 class="big-title translate" data-speed="0.1">
+        DANS LES LIEUX éLEVéS
+      </h1>
+      <h1 class="second-title translate" data-speed="0.1">
+        <div class="d-none d-lg-block">
+          Par notre union avec Jésus-Christ, Dieu nous a ressucités ensemble et
+          nous a fait siéger ensemble dans le monde céleste
+        </div>
+      </h1>
+      <span class="bg-image">
+        <img
+          src="img/person.png"
+          class="person translate"
+          data-speed="-0.25"
+          alt=""
+        />
+        <img
+          src="img/mountain1.png"
+          class="mountain1 translate"
+          data-speed="-0.2"
+          alt=""
+        />
+        <img
+          src="img/mountain2.png"
+          class="mountain2 translate"
+          data-speed="0.4"
+          alt=""
+        />
+        <img
+          src="img/mountain3.png"
+          class="mountain3 translate"
+          data-speed="0.3"
+          alt=""
+        />
+        <img src="img/sky.png" class="sky translate" data-speed="0.5" alt="" />
+      </span>
+    </header>
+
+    <section>
+      <div class="shadow"></div>
+      <h2><span>I</span>M<span>POSSIBLE</span></h2>
+      <div class="container">
+        <div class="content opacity">
+          <h3 class="title">
+            A propos
+            <div class="border"></div>
+          </h3>
+          <p class="text">
+            Nous sommes des amoureux de la Parole infaillible de Dieu. Nous
+            croyons que la Parole est Esprit et Vie, donc suffisamment puissante
+            pour conduire nos vies. Les Génies du Seigneur de Togoudo, c'est une
+            équipe qui a vu le jour en 2016 par pure grâce. Nous voulons vivre
+            pour le Seigneur à travers des activités telles que les concours
+            bibliques, les compétitions de génie biblique, les conférences, les
+            ateliers, les séances d'enseignement, les enquêtes, l'écriture de
+            livres, et par la grâce divine la réalisation et la production de
+            films chrétiens pour la gloire de notre Papa céleste.
+          </p>
+        </div>
+
+        <div class="imgContainer opacity">
+          <img src="img/scc/1.jpg" alt="" />
+        </div>
+        <div class="wrapper">
+          <div class="icon twitter">
+            <div class="tooltip">Twitter</div>
+            <span><i class="fab fa-twitter"></i></span>
+        </div>
+        <div class="icon instagram">
+            <div class="tooltip">Instagram</div>
+            <span><i class="fab fa-instagram"></i></span>
+        </div>
+        <div class="icon youtube">
+            <div class="tooltip">YouTube</div>
+            <span><i class="fab fa-youtube"></i></span>
+        </div>
+        <div class="icon twitter">
+            <div class="tooltip">LinkedIn</div>
+            <span><i class="fab fa-linkedin"></i></span>
+        </div>
+        
+        </div>
+      </div>
+    </section>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/app.js"></script>
+    <script src="js/menu.js"></script>
+  </body>
+</html>

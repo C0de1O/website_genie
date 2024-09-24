@@ -1,0 +1,330 @@
+<html><head><base href="">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Génie du Seigneur - Événements en Cours</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+  }
+  .navbar {
+    background-color: #1e3799;
+    padding: 1rem 2rem;
+  }
+  .navbar-brand {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .navbar-nav .nav-link {
+    color: rgba(255,255,255,0.8);
+    transition: color 0.3s ease;
+  }
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link.active {
+    color: white;
+  }
+  .dropdown-menu {
+    background-color: #1e3799;
+    border: none;
+  }
+  .dropdown-item {
+    color: rgba(255,255,255,0.8);
+  }
+  .dropdown-item:hover {
+    background-color: #4a69bd;
+    color: white;
+  }
+  header {
+    background-color: #1e3799;
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  h1 {
+    margin: 0;
+    font-size: 2.5rem;
+  }
+  .subtitle {
+    font-size: 1.2rem;
+    opacity: 0.8;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .search-container {
+    margin-bottom: 2rem;
+  }
+  #searchInput {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .event-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  .event-card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+  .event-card:hover {
+    transform: translateY(-5px);
+  }
+  .event-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  .event-details {
+    padding: 1.5rem;
+  }
+  .event-title {
+    font-size: 1.4rem;
+    margin-top: 0;
+    color: #1e3799;
+  }
+  .event-date, .event-location {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    color: #555;
+  }
+  .event-date i, .event-location i {
+    margin-right: 0.5rem;
+    color: #1e3799;
+  }
+  .event-description {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .cta-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #1e3799;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  .cta-button:hover {
+    background-color: #4a69bd;
+  }
+  .bible-verse {
+    text-align: center;
+    font-style: italic;
+    margin-top: 3rem;
+    padding: 1rem;
+    background-color: #e8f4f8;
+    border-radius: 10px;
+  }
+  .event-details-expanded {
+    display: none;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+  }
+  .subscription-form {
+    margin-top: 3rem;
+    text-align: center;
+  }
+  .subscription-form input[type="email"] {
+    padding: 0.8rem;
+    width: 60%;
+    max-width: 300px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+  }
+  .subscription-form button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    background-color: #1e3799;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .subscription-form button:hover {
+    background-color: #4a69bd;
+  }
+</style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Génie du Seigneur</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Maison</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="even.html">Evènement en cours</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="jeu.html">Divertissement</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="ebook.html">Ebook</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Plus
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="don.html">Faire un don</a></li>
+              <li><a class="dropdown-item" href="equipe.html">Equipe</a></li>
+              <li><a class="dropdown-item" href="#">Nous contacter</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Se connecter</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Génie du Seigneur</h1>
+    <p class="subtitle">Événements en Cours</p>
+  </header>
+
+  <div class="container">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Rechercher un événement...">
+    </div>
+
+    <div class="event-list" id="eventList">
+      <!-- Event cards will be dynamically inserted here -->
+    </div>
+
+    <div class="subscription-form">
+      <h3>Restez informé de nos événements</h3>
+      <form id="subscribeForm">
+        <input type="email" id="emailInput" placeholder="Votre adresse e-mail" required>
+        <button type="submit">S'abonner</button>
+      </form>
+    </div>
+
+    <div class="bible-verse">
+      <p>"Car là où deux ou trois sont assemblés en mon nom, je suis au milieu d'eux." - Matthieu 18:20</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const events = [
+      {
+        title: "Conférence sur la Foi",
+        date: "2023-07-15",
+        time: "19:00",
+        location: "Église de la Grâce",
+        image: "conference.jpg",
+        description: "Rejoignez-nous pour une soirée inspirante sur le thème de la foi qui déplace les montagnes.",
+        details: "Cette conférence réunira des orateurs renommés qui partageront leurs expériences et leurs enseignements sur la puissance de la foi dans notre vie quotidienne. Vous aurez l'occasion de participer à des sessions de questions-réponses et de networking avec d'autres croyants."
+      },
+      {
+        title: "Atelier d'Étude Biblique",
+        date: "2023-07-22",
+        time: "14:00",
+        location: "Centre Communautaire Chrétien",
+        image: "bible-study.jpg",
+        description: "Approfondissez votre compréhension des Écritures dans cet atelier interactif.",
+        details: "Cet atelier se concentrera sur le livre des Psaumes, explorant leur signification historique et leur pertinence pour notre vie moderne. Des groupes de discussion seront formés pour encourager le partage et l'apprentissage mutuel. Apportez votre Bible et votre curiosité !"
+      },
+      {
+        title: "Concert de Louange",
+        date: "2023-07-29",
+        time: "20:00",
+        location: "Auditorium de la Ville",
+        image: "worship-concert.jpg",
+        description: "Une soirée de musique et de louange pour élever nos cœurs vers le Seigneur.",
+        details: "Ce concert mettra en vedette des artistes chrétiens locaux et internationaux. Une partie des bénéfices sera reversée à des œuvres caritatives locales. Venez vivre un moment de communion et d'adoration avec d'autres croyants de votre communauté."
+      }
+    ];
+
+    function createEventCard(event) {
+      return `
+        <div class="event-card">
+          <img src="${event.image}" alt="${event.title}" class="event-image">
+          <div class="event-details">
+            <h2 class="event-title">${event.title}</h2>
+            <p class="event-date"><i class="far fa-calendar-alt"></i> ${event.date} à ${event.time}</p>
+            <p class="event-location"><i class="fas fa-map-marker-alt"></i> ${event.location}</p>
+            <p class="event-description">${event.description}</p>
+            <button class="cta-button" onclick="toggleDetails(this)">En savoir plus</button>
+            <div class="event-details-expanded">
+              <p>${event.details}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleDetails(button) {
+      const detailsDiv = button.nextElementSibling;
+      if (detailsDiv.style.display === "none" || detailsDiv.style.display === "") {
+        detailsDiv.style.display = "block";
+        button.textContent = "Moins d'infos";
+      } else {
+        detailsDiv.style.display = "none";
+        button.textContent = "En savoir plus";
+      }
+    }
+
+    function filterEvents() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const filteredEvents = events.filter(event => 
+        event.title.toLowerCase().includes(searchTerm) ||
+        event.description.toLowerCase().includes(searchTerm) ||
+        event.location.toLowerCase().includes(searchTerm)
+      );
+      renderEvents(filteredEvents);
+    }
+
+    function renderEvents(eventsToRender) {
+      const eventList = document.getElementById('eventList');
+      eventList.innerHTML = '';
+      eventsToRender.forEach(event => {
+        eventList.innerHTML += createEventCard(event);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderEvents(events);
+      
+      document.getElementById('searchInput').addEventListener('input', filterEvents);
+
+      document.getElementById('subscribeForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('emailInput').value;
+        alert(`Merci de vous être abonné avec l'adresse : ${email}. Vous recevrez bientôt nos mises à jour !`);
+        document.getElementById('emailInput').value = '';
+      });
+    });
+  </script>
+</body>
+</html>

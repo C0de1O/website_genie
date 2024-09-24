@@ -1,0 +1,640 @@
+<html><head><base href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Biblique Avancé - Les Génies du Seigneur de Togoudo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a1c71;
+            --secondary-color: #d76d77;
+            --accent-color: #ffaf7b;
+            --text-color: #333;
+            --light-bg: #f9f7f7;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .top-menu {
+            background-color: var(--primary-color);
+            padding: 10px 0;
+        }
+
+        .top-menu .container {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .home-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .home-link:hover {
+            color: var(--accent-color);
+        }
+
+        .home-link i {
+            margin-right: 5px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        .game-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .difficulty-selector {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .difficulty-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .question {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .option {
+            background-color: var(--light-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .score {
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+
+        .next-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .missed-question {
+            background-color: #f8f8f8;
+            border-left: 4px solid #F44336;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .timer {
+            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-menu">
+        <div class="container">
+            <a href="index.html" class="home-link"><i class="fas fa-home"></i> Accueil</a>
+        </div>
+    </nav>
+    <header>
+        <div class="container">
+            <h1>Quiz Biblique Avancé</h1>
+            <p>Testez vos connaissances bibliques à différents niveaux</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="game-container">
+            <div class="difficulty-selector">
+                <button class="difficulty-btn" onclick="setDifficulty('facile')">Facile</button>
+                <button class="difficulty-btn" onclick="setDifficulty('intermediaire')">Intermédiaire</button>
+                <button class="difficulty-btn" onclick="setDifficulty('difficile')">Difficile</button>
+                <button class="difficulty-btn" onclick="setDifficulty('contreletemps')">Contre le temps</button>
+            </div>
+            <div id="timer" class="timer" style="display: none;">Temps restant: <span id="time">60</span>s</div>
+            <div id="question" class="question"></div>
+            <div id="options" class="options"></div>
+            <div id="score" class="score">Score: 0</div>
+            <button id="next-btn" class="next-btn">Question suivante</button>
+        </div>
+    </main>
+
+    <script>
+        const questions = {
+            facile: [
+                {
+                    question: "Qui a construit l'arche selon les instructions de Dieu ?",
+                    options: ["Moïse", "Abraham", "Noé", "David"],
+                    correct: 2
+                },
+                {
+                    question: "Quel est le premier livre de la Bible ?",
+                    options: ["Exode", "Genèse", "Lévitique", "Nombres"],
+                    correct: 1
+                },
+                {
+                    question: "Qui a vaincu le géant Goliath ?",
+                    options: ["Saül", "Jonathan", "Samuel", "David"],
+                    correct: 3
+                },
+                {
+                    question: "Combien de disciples Jésus avait-il ?",
+                    options: ["10", "12", "15", "7"],
+                    correct: 1
+                },
+                {
+                    question: "Quel est le dernier livre du Nouveau Testament ?",
+                    options: ["Apocalypse", "Jean", "Actes", "Romains"],
+                    correct: 0
+                },
+                {
+                    question: "Qui a reçu les Dix Commandements de Dieu ?",
+                    options: ["Abraham", "Moïse", "Josué", "Salomon"],
+                    correct: 1
+                },
+                {
+                    question: "Quelle ville est connue comme le lieu de naissance de Jésus ?",
+                    options: ["Nazareth", "Jérusalem", "Bethléem", "Jéricho"],
+                    correct: 2
+                },
+                {
+                    question: "Qui était le père de Salomon ?",
+                    options: ["Saül", "David", "Samuel", "Jacob"],
+                    correct: 1
+                },
+                {
+                    question: "Quel animal a parlé à Balaam ?",
+                    options: ["Un lion", "Un serpent", "Un âne", "Un corbeau"],
+                    correct: 2
+                },
+                {
+                    question: "Qui a été jeté dans la fosse aux lions ?",
+                    options: ["Daniel", "Jérémie", "Ézéchiel", "Isaïe"],
+                    correct: 0
+                }
+            ],
+            intermediaire: [
+                {
+                    question: "Quel prophète a été avalé par un grand poisson ?",
+                    options: ["Élie", "Jonas", "Ésaïe", "Jérémie"],
+                    correct: 1
+                },
+                {
+                    question: "Combien de plaies Dieu a-t-il envoyées sur l'Égypte ?",
+                    options: ["7", "10", "12", "14"],
+                    correct: 1
+                },
+                {
+                    question: "Qui était le frère de Moïse ?",
+                    options: ["Aaron", "Joshua", "Caleb", "Lot"],
+                    correct: 0
+                },
+                {
+                    question: "Quel roi a construit le premier temple à Jérusalem ?",
+                    options: ["David", "Salomon", "Saül", "Roboam"],
+                    correct: 1
+                },
+                {
+                    question: "Quel apôtre a renié Jésus trois fois ?",
+                    options: ["Jean", "Jacques", "Pierre", "André"],
+                    correct: 2
+                },
+                {
+                    question: "Qui était le père de la foi selon le Nouveau Testament ?",
+                    options: ["Moïse", "David", "Abraham", "Isaac"],
+                    correct: 2
+                },
+                {
+                    question: "Quel livre de la Bible raconte l'histoire d'Esther ?",
+                    options: ["Ruth", "Esther", "Judith", "Déborah"],
+                    correct: 1
+                },
+                {
+                    question: "Combien d'années les Israélites ont-ils erré dans le désert ?",
+                    options: ["20 ans", "30 ans", "40 ans", "50 ans"],
+                    correct: 2
+                },
+                {
+                    question: "Qui a écrit la plupart des Psaumes ?",
+                    options: ["Salomon", "David", "Moïse", "Asaph"],
+                    correct: 1
+                },
+                {
+                    question: "Quel était le métier de l'apôtre Paul avant sa conversion ?",
+                    options: ["Pêcheur", "Charpentier", "Pharisien", "Collecteur d'impôts"],
+                    correct: 2
+                }
+            ],
+            difficile: [
+                {
+                    question: "Qui était le père de Mathusalem, l'homme le plus vieux de la Bible ?",
+                    options: ["Noé", "Hénoc", "Seth", "Lamech"],
+                    correct: 1
+                },
+                {
+                    question: "Quel prophète a vu la vision de la vallée des ossements desséchés ?",
+                    options: ["Ézéchiel", "Daniel", "Jérémie", "Osée"],
+                    correct: 0
+                },
+                {
+                    question: "Combien de juges sont mentionnés dans le livre des Juges ?",
+                    options: ["10", "12", "15", "20"],
+                    correct: 2
+                },
+                {
+                    question: "Quel était le nom original de l'apôtre Paul ?",
+                    options: ["Simon", "Saul", "Barnabas", "Silas"],
+                    correct: 1
+                },
+                {
+                    question: "Qui a écrit le livre de l'Apocalypse ?",
+                    options: ["Pierre", "Paul", "Jean", "Jacques"],
+                    correct: 2
+                },
+                {
+                    question: "Quel roi babylonien a conquis Jérusalem et détruit le premier temple ?",
+                    options: ["Nabuchodonosor", "Cyrus", "Darius", "Belshatsar"],
+                    correct: 0
+                },
+                {
+                    question: "Quel prophète a été appelé alors qu'il était encore enfant ?",
+                    options: ["Jérémie", "Samuel", "Daniel", "Élisée"],
+                    correct: 1
+                },
+                {
+                    question: "Qui était la femme de Moïse ?",
+                    options: ["Myriam", "Séphora", "Ruth", "Débora"],
+                    correct: 1
+                },
+                {
+                    question: "Quel livre de l'Ancien Testament ne mentionne jamais explicitement le nom de Dieu ?",
+                    options: ["Job", "Esther", "Ecclésiaste", "Cantique des Cantiques"],
+                    correct: 1
+                },
+                {
+                    question: "Combien de livres composent le Pentateuque ?",
+                    options: ["3", "4", "5", "6"],
+                    correct: 2
+                }
+            ],
+            contreletemps: [
+                {
+                    question: "Qui a trahi Jésus pour 30 pièces d'argent ?",
+                    options: ["Pierre", "Jean", "Judas", "Thomas"],
+                    correct: 2
+                },
+                {
+                    question: "Quel est le plus court verset de la Bible ?",
+                    options: ["Jésus pleura", "Dieu est amour", "Priez sans cesse", "Réjouissez-vous toujours"],
+                    correct: 0
+                },
+                {
+                    question: "Combien de personnes Jésus a-t-il nourries avec 5 pains et 2 poissons ?",
+                    options: ["1000", "4000", "5000", "10000"],
+                    correct: 2
+                },
+                {
+                    question: "Qui a demandé la tête de Jean-Baptiste ?",
+                    options: ["Hérodiade", "Salomé", "Marie-Madeleine", "Marthe"],
+                    correct: 1
+                },
+                {
+                    question: "Quel apôtre est connu comme le 'disciple que Jésus aimait' ?",
+                    options: ["Pierre", "Jean", "Jacques", "André"],
+                    correct: 1
+                },
+                {
+                    question: "Quel est le fruit défendu dans le jardin d'Eden ?",
+                    options: ["Pomme", "Figue", "Raisin", "Non spécifié"],
+                    correct: 3
+                },
+                {
+                    question: "Qui a été le premier martyr chrétien ?",
+                    options: ["Paul", "Pierre", "Étienne", "Jacques"],
+                    correct: 2
+                },
+                {
+                    question: "Combien de livres contient le Nouveau Testament ?",
+                    options: ["22", "27", "39", "66"],
+                    correct: 1
+                },
+                {
+                    question: "Quel roi a demandé la sagesse à Dieu ?",
+                    options: ["David", "Salomon", "Saül", "Ézéchias"],
+                    correct: 1
+                },
+                {
+                    question: "Qui a écrit le plus de livres du Nouveau Testament ?",
+                    options: ["Jean", "Pierre", "Paul", "Luc"],
+                    correct: 2
+                }
+            ]
+        };
+
+        let identificationQuestions = [
+            {
+                type: "lieu",
+                answer: "Bethléem",
+                hints: [
+                    "Ville de naissance de Jésus",
+                    "Située en Judée",
+                    "Signifie 'Maison du pain' en hébreu",
+                    "Mentionnée dans le livre de Ruth"
+                ]
+            },
+            {
+                type: "personne",
+                answer: "Moïse",
+                hints: [
+                    "A conduit les Israélites hors d'Égypte",
+                    "A reçu les Dix Commandements",
+                    "Son nom signifie 'Tiré des eaux'",
+                    "A vécu 120 ans"
+                ]
+            },
+            {
+                type: "objet",
+                answer: "Arche de l'Alliance",
+                hints: [
+                    "Contenait les tables de la Loi",
+                    "Fabriquée en bois d'acacia et recouverte d'or",
+                    "Transportée par les Lévites",
+                    "Située dans le Saint des Saints du Tabernacle"
+                ]
+            },
+            {
+                type: "animal",
+                answer: "Colombe",
+                hints: [
+                    "Envoyée par Noé après le déluge",
+                    "Symbole du Saint-Esprit",
+                    "Présente lors du baptême de Jésus",
+                    "Symbole de paix dans la Bible"
+                ]
+            }
+        ];
+
+        let currentIdentificationQuestion;
+        let currentHintIndex;
+        let identificationScore;
+
+        let currentDifficulty = 'facile';
+        let currentQuestion = 0;
+        let score = 0;
+        let correctAnswers = [];
+        let timer;
+        let timeLeft;
+
+        const questionEl = document.getElementById('question');
+        const optionsEl = document.getElementById('options');
+        const scoreEl = document.getElementById('score');
+        const nextBtn = document.getElementById('next-btn');
+        const timerEl = document.getElementById('timer');
+        const timeEl = document.getElementById('time');
+
+        function isEligibleForIdentification() {
+            return score >= 8;
+        }
+
+        function startIdentificationGame() {
+            currentIdentificationQuestion = identificationQuestions[Math.floor(Math.random() * identificationQuestions.length)];
+            currentHintIndex = 0;
+            identificationScore = 4;
+            showIdentificationQuestion();
+        }
+
+        function showIdentificationQuestion() {
+            questionEl.innerHTML = `
+                <h2>Jeu d'Identification</h2>
+                <p>Type: ${currentIdentificationQuestion.type}</p>
+                <p>Indice: ${currentIdentificationQuestion.hints[currentHintIndex]}</p>
+                <p>Points: ${identificationScore}</p>
+            `;
+            optionsEl.innerHTML = `
+                <input type="text" id="identification-answer" placeholder="Votre réponse">
+                <button onclick="checkIdentificationAnswer()">Soumettre</button>
+            `;
+            nextBtn.style.display = 'none';
+        }
+
+        function checkIdentificationAnswer() {
+            const userAnswer = document.getElementById('identification-answer').value.toLowerCase();
+            if (userAnswer === currentIdentificationQuestion.answer.toLowerCase()) {
+                showIdentificationResult(true);
+            } else {
+                identificationScore--;
+                currentHintIndex++;
+                if (identificationScore > 0) {
+                    showIdentificationQuestion();
+                } else {
+                    showIdentificationResult(false);
+                }
+            }
+        }
+
+        function showIdentificationResult(won) {
+            questionEl.innerHTML = `
+                <h2>Résultat du Jeu d'Identification</h2>
+                <p>${won ? 'Félicitations ! Vous avez gagné !' : 'Dommage, vous avez perdu.'}</p>
+                <p>La réponse était: ${currentIdentificationQuestion.answer}</p>
+                <p>Votre score: ${identificationScore}</p>
+            `;
+            optionsEl.innerHTML = '';
+            nextBtn.style.display = 'block';
+            nextBtn.textContent = 'Retour au menu principal';
+            nextBtn.onclick = () => location.reload();
+        }
+
+        function setDifficulty(difficulty) {
+            currentDifficulty = difficulty;
+            currentQuestion = 0;
+            score = 0;
+            correctAnswers = [];
+            scoreEl.textContent = 'Score: 0';
+            nextBtn.style.display = 'block';
+            
+            if (difficulty === 'contreletemps') {
+                timerEl.style.display = 'block';
+                timeLeft = 60;
+                updateTimer();
+                timer = setInterval(updateTimer, 1000);
+            } else {
+                timerEl.style.display = 'none';
+                clearInterval(timer);
+            }
+            
+            loadQuestion();
+        }
+
+        function updateTimer() {
+            timeEl.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                showResults();
+            }
+            timeLeft--;
+        }
+
+        function loadQuestion() {
+            const question = questions[currentDifficulty][currentQuestion];
+            questionEl.textContent = question.question;
+
+            optionsEl.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('option');
+                button.addEventListener('click', () => selectOption(index));
+                optionsEl.appendChild(button);
+            });
+            nextBtn.style.display = 'none';
+        }
+
+        function selectOption(index) {
+            const question = questions[currentDifficulty][currentQuestion];
+            if (index === question.correct) {
+                score++;
+                scoreEl.textContent = `Score: ${score}`;
+                correctAnswers.push(currentQuestion);
+            }
+
+            const options = optionsEl.getElementsByClassName('option');
+            for (let i = 0; i < options.length; i++) {
+                options[i].disabled = true;
+                if (i === question.correct) {
+                    options[i].style.backgroundColor = '#4CAF50';
+                    options[i].style.color = 'white';
+                } else if (i === index) {
+                    options[i].style.backgroundColor = '#F44336';
+                    options[i].style.color = 'white';
+                }
+            }
+            
+            if (currentDifficulty === 'contreletemps') {
+                nextQuestion();
+            } else {
+                nextBtn.style.display = 'block';
+            }
+        }
+
+        function showResults() {
+            clearInterval(timer);
+            let resultsHTML = `<h2>Résultats du Quiz</h2>
+                               <p>Votre score final pour le niveau ${currentDifficulty} est: ${score}/${questions[currentDifficulty].length}</p>
+                               <h3>Questions manquées:</h3>`;
+
+            questions[currentDifficulty].forEach((q, index) => {
+                if (!correctAnswers.includes(index)) {
+                    resultsHTML += `
+                        <div class="missed-question">
+                            <p><strong>Question ${index + 1}:</strong> ${q.question}</p>
+                            <p><strong>Réponse correcte:</strong> ${q.options[q.correct]}</p>
+                        </div>
+                    `;
+                }
+            });
+
+            if (isEligibleForIdentification()) {
+                resultsHTML += `
+                    <h3>Félicitations ! Vous êtes éligible pour le jeu d'Identification.</h3>
+                    <button onclick="startIdentificationGame()">Jouer au jeu d'Identification</button>
+                `;
+            }
+
+            questionEl.innerHTML = resultsHTML;
+            optionsEl.innerHTML = '';
+            nextBtn.style.display = 'none';
+            timerEl.style.display = 'none';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions[currentDifficulty].length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        nextBtn.addEventListener('click', nextQuestion);
+
+        loadQuestion();
+    </script>
+</body>
+</html>
